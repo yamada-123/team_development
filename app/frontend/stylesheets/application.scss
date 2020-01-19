@@ -8,3 +8,13 @@ $fa-font-path: '~font-awesome/fonts';
   width: 100%;
   height: auto;
 }
+
+.inline-block_test {
+  display: inline-block;
+  /* インラインブロック要素にする */
+  /* 背景色指定 */
+  padding: 20px;
+  /* 余白指定 */
+  height: 10px;
+  /* 高さ指定 */
+}
