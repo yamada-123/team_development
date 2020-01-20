@@ -10,7 +10,7 @@ class AgendasController < ApplicationController
     @agenda = Agenda.new
   end
  
-#Aa
+#1
   def create
     @agenda = current_user.agendas.build(title: params[:title])
     @agenda.team = Team.friendly.find(params[:team_id])
