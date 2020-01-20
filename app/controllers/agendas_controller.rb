@@ -24,13 +24,15 @@ class AgendasController < ApplicationController
 
   def destroy
     @agenda = Agenda.find(params[:id])
+    #binding.irb
     if @current_user.id == @agenda.user_id || @current_user.id == @agenda.team.owner_id
       @agenda.destroy
       @agenda.team.members.each do |user|      
-        #binding.irb
       AgendaMailer.delete_mail(user.email).deliver
       end
       redirect_to dashboard_path, notice: "アジェンダを削除しました"
+    else
+      redirect_to dashboard_path, notice: "作成者かチームオーナーしか削除できません"
     end
   end
 
