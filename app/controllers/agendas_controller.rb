@@ -9,7 +9,8 @@ class AgendasController < ApplicationController
     @team = Team.friendly.find(params[:team_id])
     @agenda = Agenda.new
   end
-
+ 
+#1
   def create
     @agenda = current_user.agendas.build(title: params[:title])
     @agenda.team = Team.friendly.find(params[:team_id])
@@ -18,6 +19,20 @@ class AgendasController < ApplicationController
       redirect_to dashboard_url, notice: I18n.t('views.messages.create_agenda') 
     else
       render :new
+    end
+  end
+
+  def destroy
+    @agenda = Agenda.find(params[:id])
+    #binding.irb
+    if @current_user.id == @agenda.user_id || @current_user.id == @agenda.team.owner_id
+      @agenda.destroy
+      @agenda.team.members.each do |user|      
+      AgendaMailer.delete_mail(user.email).deliver
+      end
+      redirect_to dashboard_path, notice: "アジェンダを削除しました"
+    else
+      redirect_to dashboard_path, notice: "作成者かチームオーナーしか削除できません"
     end
   end
 
