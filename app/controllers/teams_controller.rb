@@ -1,9 +1,27 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy admin_change]
 
   def index
     @teams = Team.all
+  end
+
+  def admin_change
+    if  @team.owner_id != params[:assign_user_id].to_i
+      #binding.irb
+      @user = User.find(params[:assign_user_id])
+      @team.owner_id = @user.id
+      @team.save
+      #binding.pry
+      @team.members.each do |user|
+      # User.where(id: params[:assign_user_id]) = @team.owner_id
+      AdminMailer.change_mail(user.email).deliver
+    end
+    redirect_to dashboard_url, notice: "チーム内権限を変更しました" 
+    else
+     # binding.pry
+      redirect_to dashboard_path, notice: "すでに権限を持っています"
+    end
   end
 
   def show
@@ -15,7 +33,15 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
-  def edit; end
+  def edit
+    #binding.irb
+    if 
+      @team.owner_id == current_user.id
+    else
+      redirect_to dashboard_path, notice: "チームの管理者権限がありません。"
+    end 
+  end
+    # ; end
 
   def create
     @team = Team.new(team_params)
@@ -39,6 +65,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
+    #binding.irb
     @team.destroy
     redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
   end

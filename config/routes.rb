@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   resource :user
   
   resources :teams do
+    member do #id付きで値送信(postの場合)
+      post :admin_change
+    end
     resources :assigns, only: %w(create destroy)
     resources :agendas, shallow: true do
       resources :articles do
