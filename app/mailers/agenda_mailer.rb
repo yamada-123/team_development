@@ -5,7 +5,7 @@ class AgendaMailer < ApplicationMailer
     # @email = @agenda.user.email
     # @users = @agenda.team.members
     @email = email
-    binding.irb
+    #binding.irb
     mail to: @email, subject: "アジェンダ削除について"
   end
 end

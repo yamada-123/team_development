@@ -208,6 +208,7 @@ ja:
       create_agenda: 'アジェンダ作成に成功しました！'
       create_article: '記事作成に成功しました！'
       update_article: '記事更新に成功しました！'
+      cannot_have_authority: '削除権限を持っていません'
       assigned: 'アサインしました！'
       failed_to_assign: 'アサインに失敗しました！'
       cannot_delete_the_leader: 'リーダーは削除できません。'

@@ -12,7 +12,7 @@ class TeamsController < ApplicationController
       @user = User.find(params[:assign_user_id])
       @team.owner_id = @user.id
       @team.save
-      binding.pry
+      #binding.pry
       @team.members.each do |user|
       # User.where(id: params[:assign_user_id]) = @team.owner_id
       AdminMailer.change_mail(user.email).deliver
@@ -33,7 +33,15 @@ class TeamsController < ApplicationController
     @team = Team.new
   end
 
-  def edit; end
+  def edit
+    #binding.irb
+    if 
+      @team.owner_id == current_user.id
+    else
+      redirect_to dashboard_path, notice: "チームの管理者権限がありません。"
+    end 
+  end
+    # ; end
 
   def create
     @team = Team.new(team_params)
@@ -57,6 +65,7 @@ class TeamsController < ApplicationController
   end
 
   def destroy
+    #binding.irb
     @team.destroy
     redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
   end

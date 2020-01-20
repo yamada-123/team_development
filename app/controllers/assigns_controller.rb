@@ -26,8 +26,11 @@ class AssignsController < ApplicationController
   end
 
   def assign_destroy(assign, assigned_user)
+    binding.irb
     if assigned_user == assign.team.owner
       I18n.t('views.messages.cannot_delete_the_leader')
+    elsif Team.find(current_user.keep_team_id).owner_id != current_user.id && current_user.id != User.find(assign.user_id).id
+      I18n.t('views.messages.cannot_have_authority')
     elsif Assign.where(user_id: assigned_user.id).count == 1
       I18n.t('views.messages.cannot_delete_only_a_member')
     elsif assign.destroy

@@ -221,6 +221,7 @@ en:
       assigned: 'Assigned!'
       failed_to_assign: 'Assignment failed'
       cannot_delete_the_leader: 'The leader cannot be deleted'
+      cannot_delete_the_member: 'You do not have authority'
       cannot_delete_only_a_member: 'This user is only a member of this team and cannot be deleted'
       delete_member: 'The member has been deleted'
       cannot_delete_member_4_some_reason: 'The file could not be deleted for some reason.'
